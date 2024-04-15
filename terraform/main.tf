@@ -66,7 +66,7 @@ resource "google_compute_instance" "instance-2" {
 
  
   metadata = {
-    ssh-keys = "gcp:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"
 	startup-script = <<-EOF
     sudo apt-get update
     sudo apt-get install -y docker.io
