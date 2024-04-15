@@ -68,7 +68,7 @@ To run the code you need to follow the steps below.
 
 ### 1. Clone the Repository
 	
-		git clone <repository_url>  <repository_directory>
+		git clone https://github.com/Javeed-Pasha/Projecttest.git terraform_test/
 	
 ### 2. Install and initialize google cloud SDK
 	
