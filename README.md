@@ -202,4 +202,4 @@ In BigQuery, you will find a Dimension table named **Dim_Stations**, a Fact tabl
 
 
 
-[Top](#Bike-usage-analytics-project)
+[Go to Top](#Bike-usage-analytics-project)
