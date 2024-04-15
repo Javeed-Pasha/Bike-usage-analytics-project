@@ -105,20 +105,22 @@ download the service account key and save as `my-creds.json` and save it in your
 		
 ### 7. Update Terraform Configuration
 		In the Terrafom files cloned in previous step go to varaibles.tf 
-    1.   in **variables.tf** file
-          Replace 
-	1.  if the sshkey generated with not gcp as username then Set the `VM_USER_HOME` value to `/home/USERNAME`, replacing `USERNAME` with the username specified during SSH key generation
+    1.   In **variables.tf** file Replace 
+	1.  If the SSH key is generated with a username other than "gcp", you should set the VM_USER_HOME value to /home/USERNAME in the Terraform configuration file. 
+ 	    Replace USERNAME with the actual username specified during SSH key generation.
         2.  set `project` to your gcp project_id 
         3.  set `bq_dataset` to your bigQuery dataset name 
         4.  set `gcs_bucketname` to your gcp bucket name
-    2.  In **main.tf** file
-        1.  replace the string `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"`
-	    with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"` where USERNAME and KEYFILENAME which is given in ssh-keygen step 6
+    2.  In **main.tf** file. If the username is the same as "gcp", you don't need to make any changes mentioned below.
+    	1.  replace the string `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"`
+	    with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"` 
+     	    Replace <USERNAME> with the actual username and KEYFILENAME with the filename specified during step 6 of the SSH key generation process.
 
 ### 8. Deploy Infrastructure
-The Terraform script provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches the Mage git repository, which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into bigQuery.
+The Terraform scripts provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches this [Mage git repository](https://github.com/Javeed-Pasha/mage_dataengineeringzoomcamp), which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into BigQuery warehouse.
 
-**IMPORTANT**: if the gcp bucket and bigquery dataset creation **_FAILS_**. please give a new name and  re-run the `terraform Plan` and `terraform apply` steps. and you have to manually edit the pipelines in mage with the new names accordingly. 
+**IMPORTANT**: The only thing that can **fail** in terraform apply are due to gcp bucket name  and bigquery dataset name. 
+In case the creation of the GCP bucket and BigQuery dataset fails during the Terraform execution due to name conflicts,you'll need to choose new names and rerun the terraform plan and terraform apply steps.. 
 	
 		terraform init
   		terraform plan
@@ -154,21 +156,24 @@ Copy your service account key contents to below file
 			
 ### Running the Code
 
-To begin, navigate to the directory `cd ~/mage` in your terminal. Then, start the Docker containers `docker-compose up -d`. 
-Ensure that you configure port forwarding in VS Code for ports 6789 and 5432. You can access the Mage application at http://localhost:6789/.
-
-Additionally, please note that you may need to adjust certain parameters such as bucket_name, project_id, and bigquery dataset names in the Mage pipelines according to your setup.
-
-Finally, run the pipeline named DataPipeline_mibici to initiate the data processing tasks
+1.	To begin, navigate to the directory `cd ~/mage` in your terminal. Then, start the Docker containers `docker-compose up -d`. 
+2.	Ensure that you configure port forwarding in VS Code for ports 6789 and 5432.
+3.	Now, you can access the Mage application at http://localhost:6789/.
+4.	Edit the pipeline named **DataPipeline_mibici** and goto block named **create_spark_session** and replace the variables
+		bucket_name='REPLACE_WITH_GCP_BUCKETNAME'
+		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
+		bigquery_dataset = 'REPLACE_WITH_BIGQUERY_DATASETNAME'
+5.	Finally, run the pipeline named DataPipeline_mibici to initiate the data processing tasks
  
-
-When you are done, in a google bucket you should have rides parquet files partitioned by year and month  and a nomenclature parquet file and in the BigQuery you should have all tables.
- 
-When you are done, in a google bucket you should have two CSV files and in the BigQuery you should have all tables. 
-
 Your pipeline should look like this:
    
 <img src="images/mage_flow.PNG" width="900" height="550" />
+
+Once the process is complete, the raw data for rides will be partitioned by year and month and stored in Google Cloud Storage under the directory **bucket_name/raw/rides/\*/\*/**. 
+Similarly, the raw data for stations will be located at **bucket_name/raw/nomenclature/\***.
+
+In BigQuery, you will find a Dimension table named **Dim_Stations**, a Fact table called **Rides_Fact**, and an Analytics table named **rides-analytics_data**. The analytics table will contain metrics such as ride routes to identify popular routes.
+
 
 <br>
 
@@ -180,17 +185,11 @@ Your pipeline should look like this:
 
   
 
-- With your google account, log in at [Google looker studio](https://lookerstudio.google.com/navigation/reporting)
-
-  
+- Log in to [Google looker studio](https://lookerstudio.google.com/navigation/reporting)
 
 - Connect your dataset using the Big Query Connector
 
-  
-
-- Select your project name then select the dataset. This would bring you to the dashboard page
-
-  
+- Select your project name and the dataset. This would launch a dashboard page
 
 - Create your visualizations and share.
 
@@ -203,4 +202,4 @@ Your pipeline should look like this:
 
 
 
-[Home](#Bike-usage-analytics-project)
+[Top](#Bike-usage-analytics-project)
