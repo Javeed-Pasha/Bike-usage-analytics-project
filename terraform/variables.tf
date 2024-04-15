@@ -6,9 +6,9 @@ variable "VM_USER_HOME" {
   default     = "/home/gcp"
 }
 
-variable "creds" {
+variable "secrets_key_path" {
   description = "my google credentials"
-  default     = "/home/gcp/.gc/my-creds.json"
+  default     = "~/.gc/my-creds.json"
 
 }
 
