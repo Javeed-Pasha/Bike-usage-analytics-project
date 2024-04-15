@@ -4,7 +4,7 @@
 
 - [Prerequisites](#prerequisites)
 
-- [Setting up GCP](#setting-up-gcp)
+- [Setup and Reproducibility](#Setup-and-Reproducibility)
 
 - [Running the Code](#running-the-code)
 
@@ -62,7 +62,7 @@ To run the code you need to follow the steps below.
 
 ---
 
-##   Setting up and Reproducibility
+##   Setup and Reproducibility
 
 *Note: these instructions are used for Linux/WSL.
 
@@ -224,4 +224,4 @@ Your pipeline should look like this:
   
   
 
-[Home](#air-quality-project)
+[Home](#Bike-usage-analytics-project)
