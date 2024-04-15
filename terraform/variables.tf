@@ -8,7 +8,7 @@ variable "VM_USER_HOME" {
 
 variable "creds" {
   description = "my google credentials"
-  default     = "${var.VM_USER_HOME}/.gc/my-creds.json"
+  default     = "/home/jpasha/.gc/my-creds.json"
 
 }
 
