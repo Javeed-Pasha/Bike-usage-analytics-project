@@ -117,7 +117,8 @@ download the service account key and save as `my-creds.json` and save it in your
 
 ### 8. Deploy Infrastructure
 	
-		terraform plan 
+		terraform init
+  		terraform plan
 		terraform apply
 	
  The Terraform script provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches the Mage git repository, which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into bigQuery.
