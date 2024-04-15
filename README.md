@@ -112,9 +112,8 @@ download the service account key and save as `my-creds.json` and save it in your
         3.  set `bq_dataset` to your bigQuery dataset name 
         4.  set `gcs_bucketname` to your gcp bucket name
     2.  In **main.tf** file
-        1.  replace the string `ssh-keys = "jpasha:${file("~/.ssh/id_rsa.pub")}"`
-							with `ssh-keys = "<USERNAME>:${file("~/.ssh/id_rsa.pub")}"`
-							  where USERNAME which is given in ssh-keygen step 6
+        1.  replace the string `ssh-keys = "gcp:${file("~/.ssh/id_rsa.pub")}"`
+	    with `ssh-keys = "<USERNAME>:${file("~/.ssh/id_rsa.pub")}"` where USERNAME which is given in ssh-keygen step 6
 
 ### 8. Deploy Infrastructure
 	
