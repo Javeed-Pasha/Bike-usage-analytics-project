@@ -112,21 +112,25 @@ download the service account key and save as `my-creds.json` and save it in your
         3.  set `bq_dataset` to your bigQuery dataset name 
         4.  set `gcs_bucketname` to your gcp bucket name
     2.  In **main.tf** file
-        1.  replace the string `ssh-keys = "gcp:${file("~/.ssh/id_rsa.pub")}"`
-	    with `ssh-keys = "<USERNAME>:${file("~/.ssh/id_rsa.pub")}"` where USERNAME which is given in ssh-keygen step 6
+        1.  replace the string `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"`
+	    with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"` where USERNAME and KEYFILENAME which is given in ssh-keygen step 6
 
 ### 8. Deploy Infrastructure
+The Terraform script provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches the Mage git repository, which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into bigQuery.
+
+**IMPORTANT**: if the gcp bucket and bigquery dataset creation **_FAILS_**. please give a new name and  re-run the `terraform Plan` and `terraform apply` steps. and you have to manually edit the pipelines in mage with the new names accordingly. 
 	
 		terraform init
   		terraform plan
 		terraform apply
 	
- The Terraform script provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches the Mage git repository, which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into bigQuery.
+ 
 	
 ### 9. Use VS Code Remote SSH Extension
-	Connect to your remote VM using VS Code with the Remote - SSH extension. Open VS Code, press `F1`, and select `Remote-SSH: Connect to Host...`. Enter the SSH connection details for your VM.
+Connect to your remote VM using VS Code with the Remote - SSH extension. Open VS Code, press `F1`, and select `Remote-SSH: Connect to Host...`. 
+Enter the SSH connection details for your VM.
 	
-	By this time the new GCP VM will have a running mage docker .  
+By this time the new GCP VM will have a running mage docker .  
 	
 ### 10. Update File Ownership and add user to docker group 
 	
@@ -140,11 +144,13 @@ download the service account key and save as `my-creds.json` and save it in your
 	
 	
 ### 12.  Copy Service Account Key
-		Copy your service account key contents to below file
+Copy your service account key contents to below file
 	
-		touch /home/$USER/.gc/my-creds.json 
+		mkdir -p /home/gcp/.gc/
+		touch /home/gcp/.gc/my-creds.json
+ 
 	
- manually copy  YOUR_GCP_CREDENTIALS.json  to  /home/$USER/.gc/my-creds.json on new GCP VM .
+ manually copy  YOUR_GCP_CREDENTIALS.json  to  ~/.gc/my-creds.json on new GCP VM .
 			
 ### Running the Code
 
@@ -156,8 +162,7 @@ Additionally, please note that you may need to adjust certain parameters such as
 Finally, run the pipeline named DataPipeline_mibici to initiate the data processing tasks
  
 
-When you are done, in a google bucket you should have rides parquet files partitioned by year and month  and a nomenclature parquet file and in the BigQuery you should have all tables. 
-Your pipeline should look like this:
+When you are done, in a google bucket you should have rides parquet files partitioned by year and month  and a nomenclature parquet file and in the BigQuery you should have all tables.
  
 When you are done, in a google bucket you should have two CSV files and in the BigQuery you should have all tables. 
 
@@ -193,35 +198,9 @@ Your pipeline should look like this:
 
 <br>
 
- 
----
-
-  
-
----
-
 
 <br >
 
-  
 
-<table><tr>
-
-<td> <img src="images/airquality-report.png" width="450"/> </td>
-
-<td> <img src="images/weather-airquality-report.png" width="450"/> </td>
-
-<tr>
-
-<td>Air Quality Report 1</td>
-
-<td>Air Quality Report 2</td>
-
-</tr>
-
-</tr></table>
-
-  
-  
 
 [Home](#Bike-usage-analytics-project)
