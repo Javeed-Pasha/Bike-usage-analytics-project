@@ -99,15 +99,15 @@ download the service account key and save as `my-creds.json` and save it in your
 	
 ### 6. Create SSH Key
 	
-		ssh-keygen -t rsa -f ~/.ssh/KEY_FILENAME -C USERNAME -b 2048
-	
+		ssh-keygen -t rsa -f ~/.ssh/gcp_key -C gcp -b 2048
+		#here gcp_key is keyfilename and gcp is the username 	
 		this user will be used to login to the new GCP VM we will create in next steps.
 		
 ### 7. Update Terraform Configuration
 		In the Terrafom files cloned in previous step go to varaibles.tf 
     1.   in **variables.tf** file
           Replace 
-				1.  Set the `VM_USER_HOME` value to `/home/USERNAME`, replacing `USERNAME` with the username specified during SSH key generation
+	1.  if the sshkey generated with not gcp as username then Set the `VM_USER_HOME` value to `/home/USERNAME`, replacing `USERNAME` with the username specified during SSH key generation
         2.  set `project` to your gcp project_id 
         3.  set `bq_dataset` to your bigQuery dataset name 
         4.  set `gcs_bucketname` to your gcp bucket name
