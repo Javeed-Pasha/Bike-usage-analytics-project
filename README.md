@@ -144,7 +144,7 @@ download the service account key and save as `my-creds.json` and save it in your
 	```bash
 		touch /home/$USER/.gc/my-creds.json 
 	```
- manually copy  YOUR_GCP_CREDENTIALS.json /home/$USER/.gc/my-creds.json
+ manually copy  YOUR_GCP_CREDENTIALS.json  to  /home/$USER/.gc/my-creds.json on new GCP VM .
 			
 ### Running the Code
 
@@ -158,41 +158,12 @@ Finally, run the pipeline named DataPipeline_mibici to initiate the data process
 
 When you are done, in a google bucket you should have rides parquet files partitioned by year and month  and a nomenclature parquet file and in the BigQuery you should have all tables. 
 Your pipeline should look like this:
+ 
+When you are done, in a google bucket you should have two CSV files and in the BigQuery you should have all tables. 
 
-
-<table><tr>
-
-<td> <img src="images/mage-find-pipelines.png" width="150"/> </td>
-
-<td> <img src="images/pipeline-name.png" width="350"/> </td>
-
-<td> <img src="images/run-pipeline.png" width="250"/> </td>
-
-<tr>
-
-<td>Find pipeline</td>
-
-<td>Pipeline </td>
-
-<td>Run pipeline </td>
-
-</tr>
-
-</tr></table>
-
-  
-  
-
-**IMPORTANT**: For some reason, an error may occur during the step of creating the 'air_aggregated' table, indicating '404 Not Found: Table air-quality-project-417718:air_quality.air_aggregated_data was not found in location EU.' However, if you navigate to BigQuery and refresh the database, the table should appear.
-
-  
-
-When you are done, in a google bucket you should have two CSV files and in the BigQuery you should have all tables. Your pipeline should look like this:
-
-  
-  
-
-<img src="images/mage-workflow.png" width="450" />
+Your pipeline should look like this:
+   
+<img src="images/mage_flow.PNG" width="900" height="550" />
 
 <br>
 
