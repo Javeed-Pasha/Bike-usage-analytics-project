@@ -3,12 +3,12 @@
 variable "VM_USER_HOME" {
 
   description = "VM user, same as sshkey generated"
-  default     = "/home/jpasha"
+  default     = "/home/gcp"
 }
 
 variable "creds" {
   description = "my google credentials"
-  default     = "/home/jpasha/.gc/my-creds.json"
+  default     = "/home/gcp/.gc/my-creds.json"
 
 }
 
