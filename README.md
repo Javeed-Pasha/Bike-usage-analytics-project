@@ -67,20 +67,20 @@ To run the code you need to follow the steps below.
 *Note: these instructions are used for Linux/WSL.
 
 ### 1. Clone the Repository
-	```
+	
 		git clone <repository_url>  <repository_directory>
-	```
+	
 ### 2. Install and initialize google cloud SDK
-	```bash
+	
 		sudo apt-get update && sudo apt-get install google-cloud-sdk
 		gcloud init
-	```
+	
 	
 ### 3. Install  and initialize and download Terraform
-	```bash
+	
 		sudo apt update && sudo apt install terraform 
 		terraform init
-	```
+	
 ### 4. Create and download service account key
 
 Create [Service Account key](https://cloud.google.com/iam/docs/keys-create-delete)
@@ -92,15 +92,15 @@ ensure the service account key as following permissions.
 download the service account key and save as `my-creds.json` and save it in your local machine under `~/.gc/` directory. This key file will be used to authenticate requests to GCP services
 
 ### 5. Set Google Application Credentials
-	```
+	
 		export GOOGLE_APPLICATION_CREDENTIALS=~/.gc/my-creds.json 
 		gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-	```
+	
 	
 ### 6. Create SSH Key
-	```
+	
 		ssh-keygen -t rsa -f ~/.ssh/KEY_FILENAME -C USERNAME -b 2048
-	```
+	
 		this user will be used to login to the new GCP VM we will create in next steps.
 		
 ### 7. Update Terraform Configuration
@@ -117,10 +117,10 @@ download the service account key and save as `my-creds.json` and save it in your
 							  where USERNAME which is given in ssh-keygen step 6
 
 ### 8. Deploy Infrastructure
-	```bash
+	
 		terraform plan 
 		terraform apply
-	```
+	
  The Terraform script provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches the Mage git repository, which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into bigQuery.
 	
 ### 9. Use VS Code Remote SSH Extension
@@ -129,21 +129,21 @@ download the service account key and save as `my-creds.json` and save it in your
 	By this time the new GCP VM will have a running mage docker .  
 	
 ### 10. Update File Ownership and add user to docker group 
-	```bash
+	
 		sudo chown -R $USER:$USER mage
 		sudo usermod -a -G docker $USER
-	```
+	
 	 
 ### 11. temporarily switch to docker  so that you dont get  permissions issue
-	```bash
+	
 		newgrp docker
-	```
+	
 	
 ### 12.  Copy Service Account Key
 		Copy your service account key contents to below file
-	```bash
+	
 		touch /home/$USER/.gc/my-creds.json 
-	```
+	
  manually copy  YOUR_GCP_CREDENTIALS.json  to  /home/$USER/.gc/my-creds.json on new GCP VM .
 			
 ### Running the Code
