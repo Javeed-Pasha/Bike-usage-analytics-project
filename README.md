@@ -146,18 +146,19 @@ download the service account key and save as `my-creds.json` and save it in your
 	```
  manually copy  YOUR_GCP_CREDENTIALS.json /home/$USER/.gc/my-creds.json
 			
-	
-### RUN the PIPELINE
+### Running the Code
 
-To begin, navigate to the directory containing the Mage project by executing cd ~/mage in your terminal. Then, start the Docker containers in detached mode with the command docker-compose up -d. Ensure that you configure port forwarding in VS Code for ports 6789 and 5432. You can access the Mage application at http://localhost:6789/.
+To begin, navigate to the directory `cd ~/mage` in your terminal. Then, start the Docker containers `docker-compose up -d`. 
+Ensure that you configure port forwarding in VS Code for ports 6789 and 5432. You can access the Mage application at http://localhost:6789/.
 
 Additionally, please note that you may need to adjust certain parameters such as bucket_name, project_id, and bigquery dataset names in the Mage pipelines according to your setup.
 
 Finally, run the pipeline named DataPipeline_mibici to initiate the data processing tasks
-    
-12. Time to work with mage. Go to the browser, find **pipelines**, click on air_quality_api pipeline and click on Run@once.
+ 
 
-  
+When you are done, in a google bucket you should have rides parquet files partitioned by year and month  and a nomenclature parquet file and in the BigQuery you should have all tables. 
+Your pipeline should look like this:
+
 
 <table><tr>
 
@@ -221,45 +222,13 @@ When you are done, in a google bucket you should have two CSV files and in the B
 
 <br>
 
-  
-
-### Facts about Pollen
-
-  
-
-A pollen count is the measurement of the number of grains of pollen in a cubic meter of air. High pollen counts can sometimes lead to increased rates of allergic reactions for those with allergic disorders.
-
-  
-
-Pollen, a fine to coarse powdery substance, is created by certain plants as part of their reproduction process. It can appear from trees in the spring, grasses in the summer, and weeds in the fall. Interestingly, pollen from flowers doesn’t usually contribute to nasal allergy symptoms.
-
-  
-
-<img src="images/pollen-counts-scale.png" width="450" />
+ 
+---
 
   
 
 ---
 
-  
-
-As a general observation, most aeropalynology studies indicate that temperature and wind have a positive correlation with airborne pollen concentrations, while rainfall and humidity are negatively correlated.
-
-  
-
----
-
-### Air Quality and Pollen.
-
-  
-
-Urban areas tend to have lower pollen counts than the countryside, but pollen can combine with air pollution in the city center and bring on hay fever symptoms. It’s not just in the summer months either; it can peak as early as April and May.
-
-  
-
-<img src="images/airquality-counts-scale.png" width="450" />
-
-  
 
 <br >
 
