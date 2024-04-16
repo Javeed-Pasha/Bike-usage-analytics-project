@@ -107,13 +107,12 @@ Note that in this context, "gcp_key" refers to the filename of the SSH key, whil
 In the Terrafom files cloned in previous step go to varaibles.tf 
 
  1.   In **variables.tf**:
-
-	1. If the SSH key uses a different username, adjust VM_USER_HOME to /home/USERNAME in the Terraform file, 
- 	   replacing "USERNAME" with your chosen username.
-	2. Set project to your GCP project ID.
-	3. Set bq_dataset to your BigQuery dataset name.
-	4. Set gcs_bucketname to your GCP bucket name.
- 2.  In **main.tf**:
+		1. If the SSH key uses a different username, adjust VM_USER_HOME to /home/USERNAME in the Terraform file, replacing "USERNAME" with your chosen username.
+		2. Set project to your GCP project ID.
+		3. Set bq_dataset to your BigQuery dataset name.
+		4. Set gcs_bucketname to your GCP bucket name.
+      
+ 3.  In **main.tf**:
      1. If the username is "gcp", no changes are required.
      2.  Replace `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"` with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"`
         , replacing <USERNAME> with your chosen username and KEYFILENAME with the filename from step 6 of the SSH key generation process.
