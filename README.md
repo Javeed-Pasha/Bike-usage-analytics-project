@@ -68,7 +68,7 @@ To run the code you need to follow the steps below.
 
 ### 1. Clone the Repository
 	
-		git clone https://github.com/Javeed-Pasha/Projecttest.git terraform_test/
+		git clone https://github.com/Javeed-Pasha/Bike-usage-analytics-project  Bike-usage-analytics-projec/
 	
 ### 2. Install and initialize google cloud SDK
 	
@@ -87,7 +87,7 @@ Create [Service Account key](https://cloud.google.com/iam/docs/keys-create-delet
 
 ensure the service account key as following permissions.
 
-`Artifact Registry Reader,Artifact Registry Writer,BigQuery Admin,Cloud Run Developer,Cloud SQL Admin,Compute Admin,Dataproc Administrator,Service Account Token Creator,Storage Admin`
+`BigQuery Admin,Cloud Run Developer,Cloud SQL Admin,Compute Admin,Service Account Token Creator,Storage Admin`
 
 download the service account key and save as `my-creds.json` and save it in your local machine under `~/.gc/` directory. This key file will be used to authenticate requests to GCP services
 
@@ -119,7 +119,7 @@ download the service account key and save as `my-creds.json` and save it in your
 ### 8. Deploy Infrastructure
 The Terraform scripts provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches this [Mage git repository](https://github.com/Javeed-Pasha/mage_dataengineeringzoomcamp), which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into BigQuery warehouse.
 
-**IMPORTANT**: The only thing that can **fail** in terraform apply are due to gcp bucket name  and bigquery dataset name. 
+**IMPORTANT**: The only thing that can **fail** in terraform apply are due to gcp bucket name  and bigquery dataset name conflicts. 
 In case the creation of the GCP bucket and BigQuery dataset fails during the Terraform execution due to name conflicts,you'll need to choose new names and rerun the terraform plan and terraform apply steps.. 
 	
 		terraform init
@@ -134,7 +134,7 @@ Enter the SSH connection details for your VM.
 	
 By this time the new GCP VM will have a running mage docker .  
 	
-### 10. Update File Ownership and add user to docker group 
+### 10. Update File Ownership and add the user to docker group 
 	
 		sudo chown -R $USER:$USER mage
 		sudo usermod -a -G docker $USER
@@ -163,13 +163,13 @@ Copy your service account key contents to below file
 		bucket_name='REPLACE_WITH_GCP_BUCKETNAME'
 		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
 		bigquery_dataset = 'REPLACE_WITH_BIGQUERY_DATASETNAME'
-5.	Finally, run the pipeline named DataPipeline_mibici to initiate the data processing tasks
+5.	Finally, run the pipeline named **DataPipeline_mibici** to initiate the data processing tasks
  
 Your pipeline should look like this:
    
 <img src="images/mage_flow.PNG" width="900" height="550" />
 
-Once the process is complete, the raw data for rides will be partitioned by year and month and stored in Google Cloud Storage under the directory **bucket_name/raw/rides/\*/\*/**. 
+Once the process is complete, the raw data for rides will be _partitioned_ by _year_ and _month_ and stored in Google Cloud Storage under the directory **bucket_name/raw/rides/\*/\*/**. 
 Similarly, the raw data for stations will be located at **bucket_name/raw/nomenclature/\***.
 
 In BigQuery, you will find a Dimension table named **Dim_Stations**, a Fact table called **Rides_Fact**, and an Analytics table named **rides-analytics_data**. The analytics table will contain metrics such as ride routes to identify popular routes.
