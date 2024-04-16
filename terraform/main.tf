@@ -109,4 +109,3 @@ resource "google_bigquery_dataset" "dtc_zoomcamp_ds" {
   location   = var.location
   delete_contents_on_destroy = true
 }
-
