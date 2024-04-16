@@ -68,7 +68,7 @@ To run the code you need to follow the steps below.
 
 ### 1. Clone the Repository
 	
-		git clone https://github.com/Javeed-Pasha/Bike-usage-analytics-project  Bike-usage-analytics-projec/
+		git clone https://github.com/Javeed-Pasha/Bike-usage-analytics-project  Bike-usage-analytics-project/
 	
 ### 2. Install and initialize google cloud SDK
 	
