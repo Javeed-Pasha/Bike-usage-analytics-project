@@ -134,7 +134,7 @@ In case the creation of the GCP bucket and BigQuery dataset fails during the Ter
 Connect to your remote VM using VS Code with the Remote - SSH extension. Open VS Code, press `F1`, and select `Remote-SSH: Connect to Host...`. 
 Enter the SSH connection details for your VM.
 	
-By this time the new GCP VM will have a running mage docker .  
+By this time the **new GCP VM** will have a **running mage docker** .  
 	
 ### 10. Update File Ownership and add the user to docker group 
 	
