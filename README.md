@@ -166,7 +166,7 @@ Copy your service account key contents to below file
 		bucket_name='REPLACE_WITH_GCP_BUCKETNAME'
 		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
 		bigquery_dataset = 'REPLACE_WITH_BIGQUERY_DATASETNAME'
-6.	Finally, run the pipeline named **DataPipeline_mibici**. go to triggers and select `RUN@ONCE`.
+6.	Finally,execute the pipeline named **DataPipeline_mibici**. Navigate to the triggers section and click `RUN@ONCE` to run the pipeline once.
  
 Your pipeline should look like this:
    
