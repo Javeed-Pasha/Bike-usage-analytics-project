@@ -76,12 +76,12 @@ resource "google_compute_instance" "instance-2" {
     sudo usermod -a -G docker $USER
     sudo service docker restart
     newgrp docker
-    mkdir -p ${var.VM_USER_HOME}/bin ${var.VM_USER_HOME}/.gc
-    touch ${var.VM_USER_HOME}/.gc/my-creds.json
+    mkdir -p ${var.VM_USER_HOME}/bin
     wget https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64 -O ${var.VM_USER_HOME}/bin/docker-compose
     chmod +x ${var.VM_USER_HOME}/bin/docker-compose
-    sudo chown -R $USER:$USER ${var.VM_USER_HOME}/mage ${var.VM_USER_HOME}/.gc
+    sudo chown -R $USER:$USER ${var.VM_USER_HOME}/mage  ${var.VM_USER_HOME}/.gc
     cd ${var.VM_USER_HOME}/mage
+    touch ${var.VM_USER_HOME}/mage/my-creds.json
     ${var.VM_USER_HOME}/bin/docker-compose up -d --build
   EOF
      
