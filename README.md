@@ -138,7 +138,7 @@ By this time the new GCP VM will have a running mage docker .
 	
 ### 10. Update File Ownership and add the user to docker group 
 	
-		sudo chown -R $USER:$USER ~/mage ~/.gc
+		sudo chown -R $USER:$USER ~/mage
 		sudo usermod -a -G docker $USER
 	
 	 
