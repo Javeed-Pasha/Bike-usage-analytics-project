@@ -44,19 +44,19 @@ The Pipelines are orchestrated via  [Mage](https://docs.mage.ai/introduction/ove
 
 Before running the data engineering pipeline, ensure you have:
 
-1. [Docker](https://docs.docker.com/engine/install/)
+- [Docker](https://docs.docker.com/engine/install/)
 
-2. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-3. [Terraform](https://developer.hashicorp.com/terraform/install)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 
-4. [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+- [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
 
-5. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-6. [VS Code](https://code.visualstudio.com/download) with the [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) extension installed
+- [VS Code](https://code.visualstudio.com/download) with the [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) extension installed
   
-7. Setup a GCP account
+- Setup a GCP account
 
 To run the code you need to follow the steps below.
 
@@ -70,7 +70,7 @@ To run the code you need to follow the steps below.
 	
 		git clone https://github.com/Javeed-Pasha/Bike-usage-analytics-project  Bike-usage-analytics-project/
 	
-### 2. Install  and initialize and download Terraform
+### 2. Install and Initialize Terraform
 	
 		sudo apt update && sudo apt install terraform 
 		terraform init
@@ -106,13 +106,13 @@ Note that in this context, "gcp_key" refers to the filename of the SSH key, whil
 ### 7. Update Terraform Configuration
 In the Terrafom files cloned in previous step go to varaibles.tf 
 
- 1.   In **variables.tf**:
+ -   In **variables.tf**:
 		1. If the SSH key uses a different username, adjust VM_USER_HOME to /home/USERNAME in the Terraform file, replacing "USERNAME" with your chosen username.
 		2. Set project to your GCP project ID.
 		3. Set bq_dataset to your BigQuery dataset name.
 		4. Set gcs_bucketname to your GCP bucket name.
       
- 3.  In **main.tf**:
+ -  In **main.tf**:
      1. If the username is "gcp", no changes are required.
      2.  Replace `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"` with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"`
         , replacing <USERNAME> with your chosen username and KEYFILENAME with the filename from step 6 of the SSH key generation process.
@@ -124,22 +124,21 @@ The Terraform scripts provisions a Google Cloud Platform (GCP) virtual machine (
 **IMPORTANT**: The only thing that can **fail** in terraform apply are due to gcp bucket name  and bigquery dataset name conflicts. 
 In case the creation of the GCP bucket and BigQuery dataset fails during the Terraform execution due to name conflicts,you'll need to choose new names and rerun the terraform plan and terraform apply steps.. 
 	
-		terraform init
-  		terraform plan
-		terraform apply
+	terraform init
+	terraform plan
+	terraform apply
 	
  
 	
-### 9. Use VS Code Remote SSH Extension
-Connect to your remote VM using VS Code with the Remote - SSH extension. Open VS Code, press `F1`, and select `Remote-SSH: Connect to Host...`. 
-Enter the SSH connection details for your VM.
-	
-By this time the **new GCP VM** will have a **running mage docker** .  
+### 9. Use VSCode Remote SSH Extension
+- Connect to your new GCP VM using VS Code with the Remote - SSH extension.
+- Enter the SSH connection details for GCP VM.
+
 	
 ### 10. Update File Ownership and add the user to docker group 
 	
-		sudo chown -R $USER:$USER ~/mage
-		sudo usermod -a -G docker $USER
+	sudo chown -R $USER:$USER ~/mage
+	sudo usermod -a -G docker $USER
 	
 	 
 ### 11. temporarily switch to docker  so that you dont get  permissions issue
@@ -152,26 +151,39 @@ Manually Copy your service account key json contents created in step 3 to  ~/mag
 			
 ### Running the Code
 
-1.	To begin, navigate to the directory `cd ~/mage` in your terminal.Next, ensure that Docker containers are running. If not, start them by executing docker-compose up -d 
-2.	Ensure that you configure port forwarding in VS Code for ports 6789 and 5432.
-3.	Now, you can access the Mage application at http://localhost:6789/.
-4.	Modify the **create_spark_session** block within the **DataPipeline_mibici** pipeline. Replace the variables listed below with the variables defined in step 7(1).
+-	To begin, navigate to the directory `cd ~/mage` in your terminal.Next, ensure that Docker containers are running. If not, start them by executing docker-compose up -d 
+-	Ensure that you configure port forwarding in VS Code for ports 6789 and 5432.
+-	Now, you can access the Mage application at http://localhost:6789/.
+-	Modify the **create_spark_session** block within the **DataPipeline_mibici** pipeline. Replace the variables listed below with the variables defined in step 7(1).
    
 		bucket_name='REPLACE_WITH_GCP_BUCKETNAME'
 		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
 		bigquery_dataset = 'REPLACE_WITH_BIGQUERY_DATASETNAME'
-6.	Finally,execute the pipeline named **DataPipeline_mibici**. Navigate to the triggers section and click `RUN@ONCE` to run the pipeline once.
+-	Finally,execute the pipeline named **DataPipeline_mibici**. Navigate to the triggers section and click `RUN@ONCE` to run the pipeline once.
  
 Your pipeline should look like this:
    
 <img src="images/mage_flow.PNG" width="900" height="550" />
 
-Once the process is complete, the raw data for rides will be _partitioned_ by _year_ and _month_ and stored in Google Cloud Storage under the directory **bucket_name/raw/rides/\*/\*/**. 
-Similarly, the raw data for stations will be located at **bucket_name/raw/nomenclature/\***.
-
-In BigQuery, you will find a Dimension table named **Dim_Stations**, a Fact table called **Rides_Fact**, and an Analytics table named **rides-analytics_data**. The analytics table will contain metrics such as ride routes to identify popular routes.
-
-
+Once the process is complete, the raw  csv data for rides will be _partitioned_ by _year_ and _month_ and stored  as parquet files in Google Cloud Storage under the directory as shown in  picture below .
+```
+zoomcamp/
+└── bikesdataset/
+    └── raw/
+        ├── rides/
+        │   ├── year=2021/
+        │   │   └── month=1/
+        │   │       └── ...
+        │   ├── year=2021/
+        │   │   └── month=2/
+        │   │       └── ...
+        │   └── ...
+        └── nomenclature/
+            └── ...
+```
+And in BigQuery, you will find a Dimension table named **Dim_Stations**, a Fact table called **Rides_Fact**, and an Analytics table named **rides-analytics**. 
+The analytics table will contain metrics such as ride routes to identify popular routes.
+ 
 <br>
 
 <br>
