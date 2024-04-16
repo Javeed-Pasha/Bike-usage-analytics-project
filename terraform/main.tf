@@ -70,19 +70,19 @@ resource "google_compute_instance" "instance-2" {
 	startup-script = <<-EOF
     sudo apt-get update
     sudo apt-get install -y docker.io
-    git clone https://github.com/Javeed-Pasha/mage_dataengineeringzoomcamp.git ~/mage
+    git clone https://github.com/Javeed-Pasha/mage_dataengineeringzoomcamp.git ${var.VM_USER_HOME}/mage
     sudo groupadd docker
     sudo gpasswd -a $USER docker
     sudo usermod -a -G docker $USER
     sudo service docker restart
     newgrp docker
-    mkdir -p ~/bin ~/.gc
-    touch ~/.gc/my-creds.json
-    wget https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64 -O ~/bin/docker-compose
-    chmod +x ~/bin/docker-compose
-    sudo chown -R $USER:$USER ~/mage
-    cd ~/mage
-    ~/bin/docker-compose up -d --build
+    mkdir -p ${var.VM_USER_HOME}/bin ${var.VM_USER_HOME}/.gc
+    touch ${var.VM_USER_HOME}/.gc/my-creds.json
+    wget https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64 -O ${var.VM_USER_HOME}/bin/docker-compose
+    chmod +x ${var.VM_USER_HOME}/bin/docker-compose
+    sudo chown -R $USER:$USER ${var.VM_USER_HOME}/mage
+    cd ${var.VM_USER_HOME}/mage
+    ${var.VM_USER_HOME}/bin/docker-compose up -d --build
   EOF
      
    }
