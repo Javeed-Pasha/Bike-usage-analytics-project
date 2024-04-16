@@ -100,21 +100,24 @@ download the service account key and save as `my-creds.json` and save it in your
 ### 6. Create SSH Key
 	
 		ssh-keygen -t rsa -f ~/.ssh/gcp_key -C gcp -b 2048
-		#here gcp_key is keyfilename and gcp is the username 	
-		this user will be used to login to the new GCP VM we will create in next steps.
+  
+Note that in this context, "gcp_key" refers to the filename of the SSH key, while "gcp" represents the username. This user credential will be utilized for logging into the newly created GCP VM in the subsequent steps
 		
 ### 7. Update Terraform Configuration
-		In the Terrafom files cloned in previous step go to varaibles.tf 
-    1.   In **variables.tf** file Replace 
-	1.  If the SSH key is generated with a username other than "gcp", you should set the VM_USER_HOME value to /home/USERNAME in the Terraform configuration file. 
- 	    Replace USERNAME with the actual username specified during SSH key generation.
-        2.  set `project` to your gcp project_id 
-        3.  set `bq_dataset` to your bigQuery dataset name 
-        4.  set `gcs_bucketname` to your gcp bucket name
-    2.  In **main.tf** file. If the username is the same as "gcp", you don't need to make any changes mentioned below.
-    	1.  replace the string `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"`
-	    with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"` 
-     	    Replace <USERNAME> with the actual username and KEYFILENAME with the filename specified during step 6 of the SSH key generation process.
+In the Terrafom files cloned in previous step go to varaibles.tf 
+
+ 1.   In **variables.tf**:
+
+	1. If the SSH key uses a different username, adjust VM_USER_HOME to /home/USERNAME in the Terraform file, 
+ 	   replacing "USERNAME" with your chosen username.
+	2. Set project to your GCP project ID.
+	3. Set bq_dataset to your BigQuery dataset name.
+	4. Set gcs_bucketname to your GCP bucket name.
+ 2.  In **main.tf**:
+     1. If the username is "gcp", no changes are required.
+     2.  Replace `ssh-keys = "gcp:${file("~/.ssh/gcp_key.pub")}"` with `ssh-keys = "<USERNAME>:${file("~/.ssh/KEYFILENAME.pub")}"`
+        , replacing <USERNAME> with your chosen username and KEYFILENAME with the filename from step 6 of the SSH key generation process.
+
 
 ### 8. Deploy Infrastructure
 The Terraform scripts provisions a Google Cloud Platform (GCP) virtual machine (VM) and fetches this [Mage git repository](https://github.com/Javeed-Pasha/mage_dataengineeringzoomcamp), which contains the Mage data pipeline to extract the MiBici data into GCS bucket and into BigQuery warehouse.
@@ -159,11 +162,12 @@ Copy your service account key contents to below file
 1.	To begin, navigate to the directory `cd ~/mage` in your terminal. Then, start the Docker containers `docker-compose up -d`. 
 2.	Ensure that you configure port forwarding in VS Code for ports 6789 and 5432.
 3.	Now, you can access the Mage application at http://localhost:6789/.
-4.	Edit the pipeline named **DataPipeline_mibici** and goto block named **create_spark_session** and replace the variables
+4.	Edit the pipeline named **DataPipeline_mibici** and goto block named **create_spark_session** and replace the variablesmentioned below and save.
+   
 		bucket_name='REPLACE_WITH_GCP_BUCKETNAME'
 		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
 		bigquery_dataset = 'REPLACE_WITH_BIGQUERY_DATASETNAME'
-5.	Finally, run the pipeline named **DataPipeline_mibici** to initiate the data processing tasks
+6.	Finally, run the pipeline named **DataPipeline_mibici**. go to triggers and select `RUN@ONCE`.
  
 Your pipeline should look like this:
    
