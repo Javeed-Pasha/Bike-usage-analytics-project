@@ -80,7 +80,7 @@ resource "google_compute_instance" "instance-2" {
     touch ${var.VM_USER_HOME}/.gc/my-creds.json
     wget https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64 -O ${var.VM_USER_HOME}/bin/docker-compose
     chmod +x ${var.VM_USER_HOME}/bin/docker-compose
-    sudo chown -R $USER:$USER ${var.VM_USER_HOME}/mage
+    sudo chown -R $USER:$USER ${var.VM_USER_HOME}/mage ${var.VM_USER_HOME}/.gc
     cd ${var.VM_USER_HOME}/mage
     ${var.VM_USER_HOME}/bin/docker-compose up -d --build
   EOF
