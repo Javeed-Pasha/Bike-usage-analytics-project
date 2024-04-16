@@ -70,18 +70,12 @@ To run the code you need to follow the steps below.
 	
 		git clone https://github.com/Javeed-Pasha/Bike-usage-analytics-project  Bike-usage-analytics-project/
 	
-### 2. Install and initialize google cloud SDK
-	
-		sudo apt-get update && sudo apt-get install google-cloud-sdk
-		gcloud init
-	
-	
-### 3. Install  and initialize and download Terraform
+### 2. Install  and initialize and download Terraform
 	
 		sudo apt update && sudo apt install terraform 
 		terraform init
 	
-### 4. Create and download service account key
+### 3. Create and download service account key
 
 Create [Service Account key](https://cloud.google.com/iam/docs/keys-create-delete)
 
@@ -91,6 +85,12 @@ ensure the service account key as following permissions.
 
 download the service account key and save as `my-creds.json` and save it in your local machine under `~/.gc/` directory. This key file will be used to authenticate requests to GCP services
 
+### 4. Install and initialize google cloud SDK
+	
+		sudo apt-get update && sudo apt-get install google-cloud-sdk
+		gcloud init
+	
+	
 ### 5. Set Google Application Credentials
 	
 		export GOOGLE_APPLICATION_CREDENTIALS=~/.gc/my-creds.json 
@@ -138,7 +138,7 @@ By this time the new GCP VM will have a running mage docker .
 	
 ### 10. Update File Ownership and add the user to docker group 
 	
-		sudo chown -R $USER:$USER mage
+		sudo chown -R $USER:$USER ~/mage ~/.gc
 		sudo usermod -a -G docker $USER
 	
 	 
@@ -148,20 +148,14 @@ By this time the new GCP VM will have a running mage docker .
 	
 	
 ### 12.  Copy Service Account Key
-Copy your service account key contents to below file
-	
-		mkdir -p /home/gcp/.gc/
-		touch /home/gcp/.gc/my-creds.json
- 
-	
- manually copy  YOUR_GCP_CREDENTIALS.json  to  ~/.gc/my-creds.json on new GCP VM .
+Manually Copy your service account key json contents created in step 3 to  ~/.gc/my-creds.json on new GCP VM .
 			
 ### Running the Code
 
 1.	To begin, navigate to the directory `cd ~/mage` in your terminal. Then, start the Docker containers `docker-compose up -d`. 
 2.	Ensure that you configure port forwarding in VS Code for ports 6789 and 5432.
 3.	Now, you can access the Mage application at http://localhost:6789/.
-4.	Edit the pipeline named **DataPipeline_mibici** and goto block named **create_spark_session** and replace the variablesmentioned below and save.
+4.	Modify the **create_spark_session** block within the **DataPipeline_mibici** pipeline. Replace the variables listed below with the variables defined in step 7(1).
    
 		bucket_name='REPLACE_WITH_GCP_BUCKETNAME'
 		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
