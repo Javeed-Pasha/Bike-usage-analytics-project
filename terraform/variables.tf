@@ -46,3 +46,4 @@ variable "gcs_bucketname" {
   description = "Bucket name"
   default     = "zoomcamp_b2"
 }
+
