@@ -148,11 +148,11 @@ By this time the new GCP VM will have a running mage docker .
 	
 	
 ### 12.  Copy Service Account Key
-Manually Copy your service account key json contents created in step 3 to  ~/.gc/my-creds.json on new GCP VM .
+Manually Copy your service account key json contents created in step 3 to  ~/mage/my-creds.json on new GCP VM .
 			
 ### Running the Code
 
-1.	To begin, navigate to the directory `cd ~/mage` in your terminal. Then, start the Docker containers `docker-compose up -d`. 
+1.	To begin, navigate to the directory `cd ~/mage` in your terminal.Next, ensure that Docker containers are running. If not, start them by executing docker-compose up -d 
 2.	Ensure that you configure port forwarding in VS Code for ports 6789 and 5432.
 3.	Now, you can access the Mage application at http://localhost:6789/.
 4.	Modify the **create_spark_session** block within the **DataPipeline_mibici** pipeline. Replace the variables listed below with the variables defined in step 7(1).
