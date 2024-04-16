@@ -6,7 +6,7 @@ terraform {
     }
   }
 }
-
+##
 provider "google" {
   # Configuration options
   credentials = file(var.secrets_key_path)
