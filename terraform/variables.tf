@@ -31,7 +31,7 @@ variable "location" {
 
 variable "bq_dataset" {
   description = "my Biq query dataset name "
-  default     = "zoomcamp_bigquery"
+  default     = "zoomcamp_bigquery2"
 
 }
 
@@ -44,6 +44,6 @@ variable "gcs_storage_class" {
 variable "gcs_bucketname" {
 
   description = "Bucket name"
-  default     = "zoomcamp_b"
+  default     = "zoomcamp_b2"
 }
 

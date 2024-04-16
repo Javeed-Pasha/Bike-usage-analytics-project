@@ -107,4 +107,6 @@ resource "google_storage_bucket" "GCP_BUCKET" {
 resource "google_bigquery_dataset" "dtc_zoomcamp_ds" {
   dataset_id = var.bq_dataset
   location   = var.location
+  delete_contents_on_destroy = true
 }
+
