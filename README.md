@@ -160,7 +160,7 @@ Manually Copy your service account key json contents created in step 3 to  ~/mag
 		project_id = 'REPLACE_WITH_GCP_PROJECT_ID'
 		bigquery_dataset = 'REPLACE_WITH_BIGQUERY_DATASETNAME'
 -	Finally,execute the pipeline named **DataPipeline_mibici**. Navigate to the triggers section and click `RUN@ONCE` to run the pipeline once.
--	**Important**: If any pipeline above fails for any reason, please edit the pipeline and manually rerun the block called Create_Spark_Session and  related **failed**  block manually.
+-	**Important**: If the pipeline **DataPipeline_mibici** fails for any reason, please edit the pipeline and manually rerun the block called **Create_Spark_Session** and  related **failed**  blocks manually.
  
 Your pipeline should look like this:
    
