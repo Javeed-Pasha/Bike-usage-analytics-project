@@ -22,19 +22,21 @@ The project was developed as the final assignment for the [Data Engineering Zoom
 
 The application fetches data from the [MiBici](https://www.mibici.net/es/datos-abiertos/). from 2020 .
 
-  
+**Objective:**
+
+Our project aims to streamline bike-sharing data analysis and visualization by offering a comprehensive solution. Through automated data ingestion, processing, and visualization, we empower stakeholders to extract actionable insights more efficiently, enhancing decision-making and operational efficiency.
 
 **Pipeline description:**
 
 The Pipelines are orchestrated via  [Mage](https://docs.mage.ai/introduction/overview)
 
-- Pipeline fetches the data from APIs
+- Extraction:The pipeline retrieves data from APIs and stores it in a more optimized data format, Parquet. The data files are partitioned based on the year and month.
 
-- Then it transforms both data sets and uploads them to Google Cloud Storage.
+- Transformation:Once stored, we proceed to extract the data from the Parquet files on GCS and apply transformative processes. This includes filtering out outliers, such as trips exceeding a day in duration, and performing data cleansing tasks such as handling missing values by replacing them with mean values. Additionally, we calculate metrics like trip durations to enrich the dataset.
 
-- In the next step this data is loaded from GCS into BigQuery.
+- Datawarehouse,the processed data is subsequently uploaded to BigQuery, Google's cloud-based data warehouse, where it is stored in partitioned tables. Partitioning by year and month facilitates efficient data querying. The target tables consist of dimensional data such as _stations_ and _rides_fact_ tables, along with a curated dataset for visualization purposes, referred to as "_rides-analytics_".
 
-- from BigQuery dataset we analyzing and visualizing bicycle usage patterns and trends using Tableau or other visualization tools..
+- from BigQuery dataset we will be analyzing and visualizing bicycle usage patterns and trends using Tableau, google's data looker or other visualization tools..
 
 
 ---
@@ -63,6 +65,8 @@ To run the code you need to follow the steps below.
 ---
 
 ##   Setup and Reproducibility
+
+To facilitate seamless deployment and reproducibility, we utilize Terraform to provision a Google Cloud Platform (GCP) virtual machine (VM). The Terraform configuration pulls our [Mage git repository](https://github.com/Javeed-Pasha/mage_dataengineeringzoomcamp) repository containing the data pipeline, automating the setup process.
 
 *Note: these instructions are used for Linux/WSL.
 
